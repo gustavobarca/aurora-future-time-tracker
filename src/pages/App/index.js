@@ -2,14 +2,16 @@ import React from 'react';
 import './styles.css';
 import ProjectsDropdown from '../../components/ProjectsDropdown';
 import Task from '../../components/Task';
+import TitleBar from '../../components/TitleBar';
 
 export default function App() {
   return (
     <div className="background">
-      <ProjectsDropdown title="Condutor" />
+      <TitleBar />
+      {/* <ProjectsDropdown title="Condutor" />
       <Task />
       <Task />
-      <Task />
+      <Task /> */}
     </div>
   );
 }
