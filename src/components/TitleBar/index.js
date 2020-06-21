@@ -1,8 +1,8 @@
 import React from 'react';
 import './styles.css';
+import icon from '../../assets/icon.png';
 
 const electron = window.require('electron');
-const icon = 'https://developer.apple.com/design/human-interface-guidelines/macos/images/icons/appIcons/AppIcon_Safari_2x.png';
 
 export default function TitleBar() {
   function close() {
