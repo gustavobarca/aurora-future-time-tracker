@@ -1,0 +1,45 @@
+.tab-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding-top: 10px;
+}
+
+.tab-text {
+  font-size: 14px;
+}
+
+.tab-container:hover {
+  background-color: #141313;
+}
+
+.tab-text-fade-in {
+  color: white;
+  transition: color 0.2s;
+}
+
+.tab-text-fade-out {
+  color: #B5B5B5;
+  transition: color 0.2s;
+}
+
+.tab-fade-in {
+  background-color: #8A2FFF;
+  transition: background-color 0.15s;
+}
+
+.tab-fade-out {
+  background-color: rgba(255, 255, 255, 0.15);
+  transition: background-color 0.15s;
+}
+
+.tab-indicator {
+  display: block;
+  height: 5px;
+  width: 100%;
+  border-radius: 15px;
+}
