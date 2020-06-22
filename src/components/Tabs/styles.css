@@ -1,0 +1,6 @@
+.tabs-container {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  flex: 1;
+}
