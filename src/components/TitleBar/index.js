@@ -1,12 +1,13 @@
 import React from 'react';
 import './styles.css';
-import icon from '../../assets/icon.png';
+import trayicon from '../../assets/trayicon.png';
 import FontAwesomePro from '../FontAwesomePro';
 
 const electron = window.require('electron');
 
 export default function TitleBar() {
   function close() {
+    electron.remote.getCurrentWindow().blur();
     electron.remote.getCurrentWindow().hide();
   }
 
@@ -17,7 +18,7 @@ export default function TitleBar() {
   return (
     <div className="titlebar-container">
       <div className="titlebar-title-container">
-        <img className="titlebar-img" src={icon} alt="icon" />
+        <img className="titlebar-img" src={trayicon} alt="trayicon" />
         <p className="titlebar-title">Aurora Future</p>
       </div>
       <div className="titlebar-title-container">

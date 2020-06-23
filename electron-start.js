@@ -9,6 +9,7 @@ const isDev = require('electron-is-dev');
 const DEV_PATH = 'http://localhost:3000';
 const RELEASE_PATH = `file://${path.resolve(__dirname, '..', 'build', 'index.html')}`;
 const ICON = path.join(__dirname, './public/icon.png');
+const TRAYICON = path.join(__dirname, './public/trayicon.png');
 
 let mainWindow;
 let tray = null;
@@ -32,13 +33,14 @@ function createWindow() {
   });
 
   // Tray
-  tray = new Tray(ICON);
+  tray = new Tray(TRAYICON);
+  
   const contextMenu = Menu.buildFromTemplate([
-    { label: 'Item1', type: 'radio' },
-    { label: 'Item2', type: 'radio' },
-    { label: 'Item3', type: 'radio', checked: true },
-    { label: 'Item4', type: 'radio' }
+    { label: 'Settings'},
+    { type: 'separator'},
+    { label: 'Quit Aurora', role: 'close', click: () => {mainWindow.close()}}
   ]);
+
   tray.setToolTip('This is my application.')
   tray.setContextMenu(contextMenu);
   tray.on('click', () => {
@@ -46,7 +48,8 @@ function createWindow() {
   });
 
   globalShortcut.register('CommandOrControl+Q', () => {
-    if (mainWindow.isVisible()) {
+    if (mainWindow.isFocused()) {      
+      mainWindow.blur();
       mainWindow.hide();
     } else {
       mainWindow.show();
