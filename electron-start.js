@@ -1,6 +1,7 @@
-const { app, BrowserWindow, Menu, Tray, globalShortcut } = require('electron');
+const { app, BrowserWindow, Menu, Tray, globalShortcut, ipcMain } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
+const { settings } = require('cluster');
 
 /**
  * Configurations
@@ -12,6 +13,8 @@ const ICON = path.join(__dirname, './public/icon.png');
 const TRAYICON = path.join(__dirname, './public/trayicon.png');
 
 let mainWindow;
+let settingsWindow;
+
 let tray = null;
 
 function createWindow() {
@@ -25,7 +28,7 @@ function createWindow() {
     },
     icon: ICON,
   });
-
+  
   mainWindow.loadURL(isDev ? DEV_PATH : RELEASE_PATH);
 
   mainWindow.on('closed', () => {
@@ -38,7 +41,7 @@ function createWindow() {
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Settings'},
     { type: 'separator'},
-    { label: 'Quit Aurora', role: 'close', click: () => {mainWindow.close()}}
+    { label: 'Quit Aurora', role: 'close', click: () => {mainWindow.close(); settingsWindow = null}}
   ]);
 
   tray.setToolTip('This is my application.')
@@ -56,6 +59,30 @@ function createWindow() {
     }
   })
 }
+
+function createSettingsWindow() {
+  settingsWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    frame: true,
+    resizable: false,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+    icon: ICON,
+  });
+
+  settingsWindow.loadURL(isDev ? DEV_PATH + '/settings' : RELEASE_PATH);
+
+  settingsWindow.on('closed', () => {
+    settingsWindow = null;
+  });
+
+}
+
+ipcMain.on('toggle-settings', (event, arg) => {
+  createSettingsWindow();
+})
 
 app.whenReady().then(createWindow)
 

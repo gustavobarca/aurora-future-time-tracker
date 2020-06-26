@@ -4,6 +4,8 @@ import ProjectsDropdown from '../../components/ProjectsDropdown';
 import Task from '../../components/Task';
 import TitleBar from '../../components/TitleBar';
 import Tabs from '../../components/Tabs';
+import IconButton from '../../components/IconButton';
+const {ipcRenderer} = window.require('electron');
 
 const projects = [
   { name: 'Condutor', value: '1' },
@@ -40,19 +42,44 @@ export default function App() {
     }))
   }
 
+  const showSettings = () => {
+    ipcRenderer.send('toggle-settings');
+  }
+
+
   return (
     <div className="background">
       <TitleBar />            
       <div className="content">
         <div className="header-content">
-          <div style={{ marginTop: 20, marginBottom: 15 }}>
+          <div style={{ marginTop: 20, marginBottom: 15, display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
             <ProjectsDropdown
               selected={selectedProject}
               projects={projects}
               title="Condutor"
               onChange={index => setSelectedProject(index)}
             />
+            <div>
+              <IconButton
+                icon="sync-alt"
+                iconColor="#BBB"
+                iconSize={14}
+                iconType="regular"
+                color="#333"
+                animated={true}            
+              />
+              <IconButton
+                icon="cog"
+                iconColor="#BBB"
+                iconSize={14}
+                iconType="solid"
+                color="#333"
+                style={{marginLeft: 8}}
+                onClick={() => showSettings()}          
+                />
+            </div>
           </div>
+
           <Tabs
             tabs={tabs}
             activeTab={activeTab}

@@ -1,0 +1,46 @@
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+@font-face {
+  font-family: "CircularStd-Black";
+  src: url('../../assets/fonts/circular-std/CircularStd-Black.ttf');
+}
+
+@font-face {
+  font-family: "CircularStd-Bold";
+  src: url('../../assets/fonts/circular-std/CircularStd-Bold.ttf');
+}
+
+@font-face {
+  font-family: "CircularStd-Book";
+  src: url('../../assets/fonts/circular-std/CircularStd-Book.ttf');
+}
+
+@font-face {
+  font-family: "CircularStd-Medium";
+  src: url('../../assets/fonts/circular-std/CircularStd-Medium.ttf');
+}
+
+
+p {
+  font-family: "CircularStd-Book";
+}
+
+h2, h3 {
+  font-family: "CircularStd-Bold";
+}
+
+.background {
+  flex: 1;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #131313;
+}

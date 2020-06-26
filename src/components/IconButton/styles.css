@@ -6,21 +6,14 @@
   outline: none;
   border: none;
   cursor: pointer;
-  transition: all 0.1s;
+  transition: opacity 0.2s;
 }
 
-/* .icon-button-active {
-  background-color: #FF4949;
+.icon-button-animating {
+  transform: rotate(720deg);
+  transition: transform 1s;
 }
 
-.icon-button-active:hover {
-  background-color: #FF6B6B;
+.icon-button:hover{
+  opacity: 0.8;
 }
-
-.icon-button-inactive {
-  background-color: #3ACF76;
-}
-
-.icon-button-inactive:hover {
-  background-color: #67E097;
-} */
