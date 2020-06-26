@@ -1,0 +1,19 @@
+.icon-button {
+  width: 24px;
+  height: 24px;
+  border-radius: 100px;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.icon-button-animating {
+  transform: rotate(720deg);
+  transition: transform 1s;
+}
+
+.icon-button:hover{
+  opacity: 0.8;
+}

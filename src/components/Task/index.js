@@ -2,7 +2,7 @@ import React from 'react';
 import './styles.css';
 import FontAwesomePro from '../FontAwesomePro';
 import Tag from '../Tag';
-import TimerButton from '../TimerButton';
+// import TimerButton from '../TimerButton';
 
 export default function Task({ title, column, onStart, started }) {
   return (
@@ -18,11 +18,11 @@ export default function Task({ title, column, onStart, started }) {
       </div>
       <div className="task-contents">
         <Tag text={column} color="#8A2FFF" />
-        <TimerButton
+        {/* <TimerButton
           icon="stopwatch"
           onClick={onStart}
           active={started}
-        />
+        /> */}
       </div>
     </div>
   );

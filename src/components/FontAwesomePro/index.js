@@ -11,10 +11,10 @@ export default function FontAwesomePro({
 }) {
   return (
     <i
-      className={`fontawesome-${type} ${className}`}
+      className={`fontawesome-${type} fa-${icon} ${className}`}
       style={{ color, fontSize: size, ...style }}
     >
-        {icon}
+      
     </i>
   );
 }

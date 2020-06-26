@@ -1,6 +1,7 @@
-const { app, BrowserWindow, Menu, Tray, globalShortcut } = require('electron');
+const { app, BrowserWindow, Menu, Tray, globalShortcut, ipcMain } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
+const { settings } = require('cluster');
 
 /**
  * Configurations
@@ -9,8 +10,11 @@ const isDev = require('electron-is-dev');
 const DEV_PATH = 'http://localhost:3000';
 const RELEASE_PATH = `file://${path.resolve(__dirname, '..', 'build', 'index.html')}`;
 const ICON = path.join(__dirname, './public/icon.png');
+const TRAYICON = path.join(__dirname, './public/trayicon.png');
 
 let mainWindow;
+let settingsWindow;
+
 let tray = null;
 
 function createWindow() {
@@ -24,7 +28,7 @@ function createWindow() {
     },
     icon: ICON,
   });
-
+  
   mainWindow.loadURL(isDev ? DEV_PATH : RELEASE_PATH);
 
   mainWindow.on('closed', () => {
@@ -32,13 +36,14 @@ function createWindow() {
   });
 
   // Tray
-  tray = new Tray(ICON);
+  tray = new Tray(TRAYICON);
+  
   const contextMenu = Menu.buildFromTemplate([
-    { label: 'Item1', type: 'radio' },
-    { label: 'Item2', type: 'radio' },
-    { label: 'Item3', type: 'radio', checked: true },
-    { label: 'Item4', type: 'radio' }
+    { label: 'Settings'},
+    { type: 'separator'},
+    { label: 'Quit Aurora', role: 'close', click: () => {mainWindow.close(); settingsWindow = null}}
   ]);
+
   tray.setToolTip('This is my application.')
   tray.setContextMenu(contextMenu);
   tray.on('click', () => {
@@ -46,13 +51,38 @@ function createWindow() {
   });
 
   globalShortcut.register('CommandOrControl+Q', () => {
-    if (mainWindow.isVisible()) {
+    if (mainWindow.isFocused()) {      
+      mainWindow.blur();
       mainWindow.hide();
     } else {
       mainWindow.show();
     }
   })
 }
+
+function createSettingsWindow() {
+  settingsWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    frame: true,
+    resizable: false,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+    icon: ICON,
+  });
+
+  settingsWindow.loadURL(isDev ? DEV_PATH + '/settings' : RELEASE_PATH);
+
+  settingsWindow.on('closed', () => {
+    settingsWindow = null;
+  });
+
+}
+
+ipcMain.on('toggle-settings', (event, arg) => {
+  createSettingsWindow();
+})
 
 app.whenReady().then(createWindow)
 

@@ -18,7 +18,7 @@ export default function ProjectsDropdown({ projects, selected, onChange }) {
   return (
     <div>
       <div className="projects-dropdown-container" onClick={toggle}>
-        <h3 className="text">{selected ? projects[selected].name : projects[selected].name}</h3>
+        <h3 className="text">{projects[selected].name}</h3>
         <FontAwesomePro
           className={visible ? 'projects-dropdown-chevron-up' : 'projects-dropdown-chevron-down'}
           icon="caret-down"
