@@ -51,11 +51,12 @@ function createWindow() {
   });
 
   globalShortcut.register('CommandOrControl+Q', () => {
-    if (mainWindow.isFocused()) {      
-      mainWindow.blur();
-      mainWindow.hide();
-    } else {
+    if ((settingsWindow != null) && (settingsWindow.isVisible())) {
+      settingsWindow.close();
+    } else if ((!mainWindow.isVisible()) || (mainWindow.isMinimized())) {      
       mainWindow.show();
+    } else {
+      mainWindow.minimize();
     }
   })
 }
