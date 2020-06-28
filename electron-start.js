@@ -11,11 +11,13 @@ const DEV_PATH = 'http://localhost:3000';
 const RELEASE_PATH = `file://${path.resolve(__dirname, '..', 'build', 'index.html')}`;
 const ICON = path.join(__dirname, './public/icon.png');
 const TRAYICON = path.join(__dirname, './public/trayicon.png');
+const SETTINGSICON = path.join(__dirname, './public/settingsicon.png');
 
 let mainWindow;
 let settingsWindow;
 
 let tray = null;
+
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -39,23 +41,24 @@ function createWindow() {
   tray = new Tray(TRAYICON);
   
   const contextMenu = Menu.buildFromTemplate([
-    { label: 'Settings'},
+    { label: 'Settings', role: 'window', icon: SETTINGSICON, click: () => {createSettingsWindow()}},
     { type: 'separator'},
-    { label: 'Quit Aurora', role: 'close', click: () => {mainWindow.close(); settingsWindow = null}}
+    { label: 'Quit Aurora', role: 'close', click: () => {mainWindow.close(); settingsWindow.close();}}
   ]);
 
-  tray.setToolTip('This is my application.')
+  tray.setToolTip('Aurora Future')
   tray.setContextMenu(contextMenu);
   tray.on('click', () => {
     mainWindow.show();
   });
 
   globalShortcut.register('CommandOrControl+Q', () => {
-    if (mainWindow.isFocused()) {      
-      mainWindow.blur();
-      mainWindow.hide();
-    } else {
+    if ((settingsWindow != null) && (settingsWindow.isVisible())) {
+      settingsWindow.close();
+    } else if ((!mainWindow.isVisible()) || (mainWindow.isMinimized())) {      
       mainWindow.show();
+    } else {
+      mainWindow.minimize();
     }
   })
 }
@@ -64,7 +67,7 @@ function createSettingsWindow() {
   settingsWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    frame: true,
+    frame: false,
     resizable: false,
     webPreferences: {
       nodeIntegration: true,

@@ -1,5 +1,6 @@
 {
   "name": "aurora-future-time-tracker",
+  "ProductName": "Aurora",
   "version": "0.1.0",
   "private": true,
   "main": "electron-start.js",
