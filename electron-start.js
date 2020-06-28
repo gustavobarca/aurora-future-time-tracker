@@ -1,7 +1,6 @@
 const { app, BrowserWindow, Menu, Tray, globalShortcut, ipcMain } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
-const { settings } = require('cluster');
 
 /**
  * Configurations
@@ -15,9 +14,8 @@ const SETTINGSICON = path.join(__dirname, './public/settingsicon.png');
 
 let mainWindow;
 let settingsWindow;
-
-let tray = null;
-
+let addProjectWindow;
+let tray;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -58,7 +56,7 @@ function createWindow() {
     } else if ((!mainWindow.isVisible()) || (mainWindow.isMinimized())) {      
       mainWindow.show();
     } else {
-      mainWindow.minimize();
+      mainWindow.hide();
     }
   })
 }
@@ -68,7 +66,7 @@ function createSettingsWindow() {
     width: 800,
     height: 600,
     frame: false,
-    resizable: false,
+    backgroundColor: '#131313',
     webPreferences: {
       nodeIntegration: true,
     },
@@ -80,12 +78,36 @@ function createSettingsWindow() {
   settingsWindow.on('closed', () => {
     settingsWindow = null;
   });
-
 }
 
-ipcMain.on('toggle-settings', (event, arg) => {
+function createAddProjectWindow() {
+  addProjectWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    frame: false,
+    backgroundColor: '#131313',
+    webPreferences: {
+      nodeIntegration: true,
+    },
+    icon: ICON,
+  });
+
+  addProjectWindow.loadURL(isDev ? DEV_PATH + '/projects/add' : RELEASE_PATH);
+
+  addProjectWindow.on('closed', () => {
+    addProjectWindow = null;
+  });
+}
+
+ipcMain.on('toggle-settings', () => {
   createSettingsWindow();
-})
+});
+
+ipcMain.on('open-add-project', () => {
+  if (!addProjectWindow) {
+    createAddProjectWindow();
+  }
+});
 
 app.whenReady().then(createWindow)
 

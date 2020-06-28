@@ -37,13 +37,6 @@ h2, h3 {
   font-family: "CircularStd-Bold";
 }
 
-.background {
-  flex: 1;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #131313;
-}
-
 .content {
   height: 442px;
   width: 100%;

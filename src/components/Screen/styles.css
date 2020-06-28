@@ -1,0 +1,7 @@
+.screen-background {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #131313;
+}
