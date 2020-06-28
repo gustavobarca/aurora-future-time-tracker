@@ -1,0 +1,28 @@
+.ss-container {
+  background-color: red;
+  width: 100%;
+  display: flex;
+  overflow-y: none;
+  overflow-x: scroll;
+}
+
+.ss-section {
+  height: 250px;
+  width: 200px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: blue;
+  border-radius: 10px;
+}
+
+.ss-header {
+
+}
+
+.ss-body {
+
+}
+
+.ss-task {
+  
+}

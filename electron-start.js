@@ -92,7 +92,7 @@ function createAddProjectWindow() {
     icon: ICON,
   });
 
-  addProjectWindow.loadURL(isDev ? DEV_PATH + '/projects/add' : RELEASE_PATH);
+  addProjectWindow.loadURL(isDev ? DEV_PATH + '/add-project' : RELEASE_PATH);
 
   addProjectWindow.on('closed', () => {
     addProjectWindow = null;

@@ -1,47 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import Screen from '../../components/Screen';
 import TitleBar from '../../components/TitleBar';
-import image from '../../assets/images/new_project.png';
 import Content, { CenteredContainer } from '../../components/Layout';
 import { H2, Description } from '../../components/Text';
 import Button from '../../components/Button';
-import Dropdown from '../../components/Dropdown';
-import { getAllProjects } from '../../services/projects';
 import '../../styles/metrics.css';
 import './styles.css';
-import { useHistory } from 'react-router-dom';
+import { getAllSections } from '../../services/sections';
+import SectionsSelect from '../../components/SectionsSelect';
+import { useParams } from 'react-router-dom';
 
-export default function AddProject() {
-  const [projects, setProjects] = useState([]);
+export default function MapSections() {
+  const [sections, setSections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
-  const [selectedProject, setSelectedProject] = useState(0);
-  const history = useHistory();
+  const [selectedSection, setSelectedSection] = useState(0);
+  const { projectGid } = useParams();
 
-  async function getProjects() {
+  async function getSections() {
     try {
-      const data = await getAllProjects('1160057899333537');
-      console.log(data);
-      setProjects(data);
+      const data = await getAllSections(projectGid);
+      setSections(data);
     } catch (err) {
       setError(err.message);
     }
   }
 
   useEffect(() => {
-    getProjects();
+    getSections();
   }, []);
 
   useEffect(() => {
-    if (projects.length) setLoading(false);
-  }, [projects]) 
+    if (sections.length) setLoading(false);
+  }, [sections]) 
 
   function goNext() {
-    history.push(`/map-sections/${projects[selectedProject].gid}`)
+    
   }
 
   function handleOnChange(index) {
-    setSelectedProject(index);
+    setSelectedSection(index);
   }
 
   return (
@@ -49,16 +47,17 @@ export default function AddProject() {
       <TitleBar />
       <Content>
         <CenteredContainer>
-          <div className="add-project-contents">
-            <img src={image} alt="add project" width="200" />
-            <H2 style={{ marginTop: 30 }}>Adicionar projeto</H2>
-            <Description style={{ marginTop: 10 }}>Escolha o projeto:</Description>
+          <div style={{ width: '100%', backgroundColor: 'green' }}>
+            <H2 style={{ marginTop: 30 }}>Indique a coluna To-do</H2>
+            <Description style={{ marginTop: 10 }}>
+              Selecione a coluna do seu projeto que guardam as tarefas para fazer
+            </Description>
             <div className="mt-3">
-              <Dropdown
-                loading={loading}
-                items={projects}
-                selected={selectedProject}
+              <SectionsSelect
                 onChange={handleOnChange}
+                sections={sections}
+                selected={selectedSection}
+                loading={loading}
               />
               <Button
                 fullWidth

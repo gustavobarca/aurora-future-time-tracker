@@ -10,7 +10,7 @@
   position: relative;
   flex: 1;
   overflow-y: auto;
-  overflow-x: none;
+  overflow-x: hidden;
 }
 
 .screen-content::-webkit-scrollbar {
