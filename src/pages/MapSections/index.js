@@ -8,14 +8,37 @@ import '../../styles/metrics.css';
 import './styles.css';
 import { getAllSections } from '../../services/sections';
 import SectionsSelect from '../../components/SectionsSelect';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+
+const steps = [
+  {
+    id: 1,
+    column: 'To-do',
+    desc: 'Selecione a coluna do seu projeto que guardam as tarefas para fazer.',
+  },
+  {
+    id: 2,
+    column: 'Doing',
+    desc: 'Selecione a coluna do seu projeto em que ficam as tarefas que estão sendo feitas. ("em progresso" ou "fazendo")',
+  },
+  {
+    id: 3,
+    column: 'Done',
+    desc: 'Selecione a coluna do seu projeto que guardam as tarefas para fazer.',
+  },
+];
 
 export default function MapSections() {
   const [sections, setSections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
-  const [selectedSection, setSelectedSection] = useState(0);
+
+  const [selectedSection, setSelectedSection] = useState(-1);
+  const [selectedSections, setSelectedSections] = useState({ });
+  const [actualStep, setActualStep] = useState(0);
+
   const { projectGid } = useParams();
+  const history = useHistory();
 
   async function getSections() {
     try {
@@ -35,11 +58,51 @@ export default function MapSections() {
   }, [sections]) 
 
   function goNext() {
-    
+    if (actualStep === steps.length - 1) {
+      console.log(selectedSections);
+      return;
+    }
+
+    setActualStep(prev => prev + 1);
+  }
+
+  function goBack() {
+    if (!actualStep) {
+      history.goBack();
+      return;
+    }
+
+    setActualStep(prev => prev - 1);
   }
 
   function handleOnChange(index) {
-    setSelectedSection(index);
+    setSelectedSections(prev => ({
+      ...prev,
+      [actualStep]: index,
+    }));
+  }
+
+  function renderStep({ column, desc }, index) {
+    if (index !== actualStep) return null;
+
+    return (
+      <div style={{ width: '100%', textAlign: 'center' }}>
+        <H2 style={{ marginTop: 30 }}>{`Indique a coluna "${column}"`}</H2>
+        <Description style={{ marginTop: 10 }}>{desc}</Description>
+        <Description>
+          Deslize para o lado para ver mais 
+          <span role="img" aria-label="slide"> 👉</span>
+        </Description>
+        <div className="mt-3">
+          <SectionsSelect
+            onChange={handleOnChange}
+            sections={sections}
+            selected={selectedSections[actualStep]}
+            loading={loading}
+          />
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -47,27 +110,13 @@ export default function MapSections() {
       <TitleBar />
       <Content>
         <CenteredContainer>
-          <div style={{ width: '100%', backgroundColor: 'green' }}>
-            <H2 style={{ marginTop: 30 }}>Indique a coluna To-do</H2>
-            <Description style={{ marginTop: 10 }}>
-              Selecione a coluna do seu projeto que guardam as tarefas para fazer
-            </Description>
+            {steps.map(renderStep)}
             <div className="mt-3">
-              <SectionsSelect
-                onChange={handleOnChange}
-                sections={sections}
-                selected={selectedSection}
-                loading={loading}
-              />
-              <Button
-                fullWidth
-                onClick={goNext}
-                style={{ marginTop: 20 }}
-              >
-                Próximo
+              <Button onClick={goBack}>Voltar</Button>
+              <Button onClick={goNext} style={{ marginLeft: 20 }}>
+                {actualStep === steps.length - 1 ? 'Finalizar' : 'Próximo'}
               </Button>
             </div>
-          </div>
         </CenteredContainer>
       </Content>
     </Screen>

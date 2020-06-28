@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Menu, Tray, globalShortcut, ipcMain } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
+const os = require('os');
 
 /**
  * Configurations
@@ -21,14 +22,16 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 370,
     height: 480,
-    frame: false,
+    frame: os.type === 'Darwin' ? true : false,
+    titleBarStyle: 'hiddenInset',
     resizable: false,
+    backgroundColor: '#131313',
     webPreferences: {
       nodeIntegration: true,
     },
     icon: ICON,
   });
-  
+
   mainWindow.loadURL(isDev ? DEV_PATH : RELEASE_PATH);
 
   mainWindow.on('closed', () => {
@@ -37,7 +40,7 @@ function createWindow() {
 
   // Tray
   tray = new Tray(TRAYICON);
-  
+
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Settings', role: 'window', icon: SETTINGSICON, click: () => {createSettingsWindow()}},
     { type: 'separator'},
@@ -53,7 +56,7 @@ function createWindow() {
   globalShortcut.register('CommandOrControl+Q', () => {
     if ((settingsWindow != null) && (settingsWindow.isVisible())) {
       settingsWindow.close();
-    } else if ((!mainWindow.isVisible()) || (mainWindow.isMinimized())) {      
+    } else if ((!mainWindow.isVisible()) || (mainWindow.isMinimized())) {
       mainWindow.show();
     } else {
       mainWindow.hide();
@@ -65,7 +68,8 @@ function createSettingsWindow() {
   settingsWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    frame: false,
+    frame: os.type === 'Darwin' ? true : false,
+    titleBarStyle: 'hiddenInset',
     backgroundColor: '#131313',
     webPreferences: {
       nodeIntegration: true,
@@ -84,7 +88,8 @@ function createAddProjectWindow() {
   addProjectWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    frame: false,
+    frame: os.type === 'Darwin' ? true : false,
+    titleBarStyle: 'hiddenInset',
     backgroundColor: '#131313',
     webPreferences: {
       nodeIntegration: true,
