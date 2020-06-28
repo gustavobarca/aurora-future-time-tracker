@@ -5,19 +5,8 @@ import Task from '../../components/Task';
 import TitleBar from '../../components/TitleBar';
 import Tabs from '../../components/Tabs';
 import IconButton from '../../components/IconButton';
-const {ipcRenderer} = window.require('electron');
-
-const projects = [
-  { name: 'Condutor', value: '1' },
-  { name: 'Vale', value: '2' },
-  { name: 'Sisatec', value: '3' },
-  { name: 'Logistica', value: '4' },
-  { name: 'Neo', value: '5' },
-  { name: 'LiaTech', value: '6' },
-  { name: 'Rhoferaço', value: '7' },
-  { name: 'Proseg', value: '8' },
-  { name: 'Sindicato dos Trabalhadores', value: '9' },
-];
+import Screen from '../../components/Screen';
+const { ipcRenderer } = window.require('electron');
 
 const tabs = [
   { name: 'To-do' },
@@ -42,20 +31,24 @@ export default function App() {
     }))
   }
 
-  const showSettings = () => {
+  function openSettings() {
     ipcRenderer.send('toggle-settings');
   }
 
+  function openAddProject() {
+    ipcRenderer.send('open-add-project');
+  }
 
   return (
-    <div className="background">
+    <Screen>
       <TitleBar />            
       <div className="content">
         <div className="header-content">
           <div style={{ marginTop: 20, marginBottom: 15, display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
             <ProjectsDropdown
               selected={selectedProject}
-              projects={projects}
+              projects={[]}
+              onAddProjectClick={openAddProject}
               title="Condutor"
               onChange={index => setSelectedProject(index)}
             />
@@ -75,7 +68,7 @@ export default function App() {
                 iconType="solid"
                 color="#333"
                 style={{marginLeft: 8}}
-                onClick={() => showSettings()}          
+                onClick={openSettings}          
                 />
             </div>
           </div>
@@ -119,6 +112,6 @@ export default function App() {
           />
         </div>
       </div>
-    </div>
+    </Screen>
   );
 }
