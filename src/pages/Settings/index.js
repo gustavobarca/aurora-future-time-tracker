@@ -5,7 +5,7 @@ import TitleBar from '../../components/TitleBar';
 export default function Settings () {
   return(
     <div className="background">
-      <TitleBar />      
+      <TitleBar />
     </div>
   )
 }

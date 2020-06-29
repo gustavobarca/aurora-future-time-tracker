@@ -3,6 +3,7 @@ import FontAwesomePro from '../FontAwesomePro';
 import { PulseLoader } from "react-spinners";
 import theme from '../../styles/theme';
 import './styles.css';
+import Scroller from '../Scroller';
 
 export default function SectionsSelect({ sections, selected, onChange, loading }) {
   if (loading) return (
@@ -12,7 +13,7 @@ export default function SectionsSelect({ sections, selected, onChange, loading }
   );
 
   return (
-    <div className="ss-container">
+    <Scroller>
       {sections.map(({ name, gid }, index) => {
         const isSelected = selected === index;
         return (
@@ -34,6 +35,6 @@ export default function SectionsSelect({ sections, selected, onChange, loading }
           </div>
         );
       })}
-    </div>
+    </Scroller>
   );
 }

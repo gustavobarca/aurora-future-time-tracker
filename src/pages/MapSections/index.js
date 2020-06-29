@@ -32,11 +32,8 @@ export default function MapSections() {
   const [sections, setSections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
-
-  const [selectedSection, setSelectedSection] = useState(-1);
-  const [selectedSections, setSelectedSections] = useState({ });
+  const [selectedSections, setSelectedSections] = useState({});
   const [actualStep, setActualStep] = useState(0);
-
   const { projectGid } = useParams();
   const history = useHistory();
 
@@ -55,7 +52,7 @@ export default function MapSections() {
 
   useEffect(() => {
     if (sections.length) setLoading(false);
-  }, [sections]) 
+  }, [sections]);
 
   function goNext() {
     if (actualStep === steps.length - 1) {
@@ -86,7 +83,7 @@ export default function MapSections() {
     if (index !== actualStep) return null;
 
     return (
-      <div style={{ width: '100%', textAlign: 'center' }}>
+      <div id="map-sections-steps-container" key={column}>
         <H2 style={{ marginTop: 30 }}>{`Indique a coluna "${column}"`}</H2>
         <Description style={{ marginTop: 10 }}>{desc}</Description>
         <Description>
