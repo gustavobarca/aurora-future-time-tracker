@@ -6,6 +6,7 @@ import TitleBar from '../../components/TitleBar';
 import Tabs from '../../components/Tabs';
 import IconButton from '../../components/IconButton';
 import Screen from '../../components/Screen';
+import ScrollContainer from 'react-indiana-drag-scroll';
 const { ipcRenderer } = window.require('electron');
 
 const tabs = [
@@ -32,7 +33,7 @@ export default function App() {
   }
 
   function openSettings() {
-    ipcRenderer.send('toggle-settings');
+    ipcRenderer.send('open-settings');
   }
 
   function openAddProject() {
@@ -79,38 +80,40 @@ export default function App() {
             onChange={index => setActiveTab(index)}
           />
         </div>
-        <div className="tab-content-container">
-          <Task
-            title="[Condutor Mobile] - Checklist - Salvar Rascunho"
-            column="Doing"
-            started={times[1]}
-            onStart={() => handleOnSetTimes(1)}
-          />
-          <Task
-            title="[Condutor Mobile] - Checklist - Salva"
-            column="Doing"
-            started={times[2]}
-            onStart={() => handleOnSetTimes(2)}
-          />
-          <Task
-            title="[Condutor Mobile] - Checklist - Salvar Rascunho"
-            column="Doing"
-            started={times[3]}
-            onStart={() => handleOnSetTimes(3)}
-          />
-          <Task
-            title="[Condutor Mobile] - Checklist - Salvar Rascunho"
-            column="Doing"
-            started={times[4]}
-            onStart={() => handleOnSetTimes(4)}
-          />
-          <Task
-            title="[Condutor Mobile] - Checklist - Salvar Rascunho"
-            column="Doing"
-            started={times[5]}
-            onStart={() => handleOnSetTimes(5)}
-          />
-        </div>
+        <ScrollContainer className="scroll-container" hideScrollbars={false} >
+          <div className="tab-content-container">
+            <Task
+              title="[Condutor Mobile] - Checklist - Salvar Rascunho"
+              column="Doing"
+              started={times[1]}
+              onStart={() => handleOnSetTimes(1)}
+            />
+            <Task
+              title="[Condutor Mobile] - Checklist - Salva"
+              column="Doing"
+              started={times[2]}
+              onStart={() => handleOnSetTimes(2)}
+            />
+            <Task
+              title="[Condutor Mobile] - Checklist - Salvar Rascunho"
+              column="Doing"
+              started={times[3]}
+              onStart={() => handleOnSetTimes(3)}
+            />
+            <Task
+              title="[Condutor Mobile] - Checklist - Salvar Rascunho"
+              column="Doing"
+              started={times[4]}
+              onStart={() => handleOnSetTimes(4)}
+            />
+            <Task
+              title="[Condutor Mobile] - Checklist - Salvar Rascunho"
+              column="Doing"
+              started={times[5]}
+              onStart={() => handleOnSetTimes(5)}
+            />
+          </div>
+        </ScrollContainer>
       </div>
     </Screen>
   );
