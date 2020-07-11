@@ -8,7 +8,7 @@ const electron = window.require('electron');
 export default function TitleBar() {
   function close() {
     electron.remote.getCurrentWindow().blur();
-    electron.remote.getCurrentWindow().hide();
+    electron.remote.getCurrentWindow().close();
   }
 
   function minimize() {

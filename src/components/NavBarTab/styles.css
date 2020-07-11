@@ -1,0 +1,48 @@
+.navbar-tab-container {
+  background-color: rgb(26, 26, 26);
+  height: 40px;
+  transition: all 0.2s;
+}
+
+.navbar-tab-container:hover {
+  background-color: rgb(30, 30, 30);
+  box-shadow: 3px 0px 15px -10px rgb(0, 0, 0);
+  cursor: pointer;
+}
+
+.navbar-tab-container-fade-in {
+  background-color: #131313; 
+  height: 40px;
+  cursor: pointer;
+}
+
+.navbar-tab-container-fade-in:hover {
+  background-color: #131313; 
+  box-shadow: none;
+  cursor: default;
+}
+
+
+.navbar-tab-text {
+  font-size: 12px;
+  color: #AAAAAA;
+  padding: 12px 20px;
+  transition: all 0.2s;
+}
+
+.navbar-tab-text:hover {
+  font-size: 12px;
+  color: #CCC;
+  padding: 12px 20px;
+  transition: all 0.2s;
+}
+
+.navbar-tab-text-fade-in {
+  font-size: 12px;
+  color: #EEE;
+}
+
+.navbar-tab-text-fade-in:hover {
+  font-size: 12px;
+  color: #EEE;
+}
