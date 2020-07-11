@@ -42,9 +42,18 @@ function createWindow() {
   tray = new Tray(TRAYICON);
 
   const contextMenu = Menu.buildFromTemplate([
-    { label: 'Settings', role: 'window', icon: SETTINGSICON, click: () => {createSettingsWindow()}},
+    { label: 'Settings', role: 'window', icon: SETTINGSICON, click: createSettingsWindow},
     { type: 'separator'},
-    { label: 'Quit Aurora', role: 'close', click: () => {mainWindow.close(); settingsWindow.close();}}
+    { label: 'Quit Aurora', role: 'close', 
+      click: () => {
+        if ((mainWindow != null) && (mainWindow.isVisible())) { 
+          mainWindow.close() 
+        } 
+        if ((settingsWindow != null) && (settingsWindow.isVisible())) { 
+          settingsWindow.close()
+        }
+      }
+    }
   ]);
 
   tray.setToolTip('Aurora Future')
@@ -54,7 +63,9 @@ function createWindow() {
   });
 
   globalShortcut.register('CommandOrControl+Q', () => {
-    if ((settingsWindow != null) && (settingsWindow.isVisible())) {
+    if ((addProjectWindow != null) && (addProjectWindow.isFocused())) {
+      addProjectWindow.close();
+    } else if ((settingsWindow != null) && (settingsWindow.isFocused())) {
       settingsWindow.close();
     } else if ((!mainWindow.isVisible()) || (mainWindow.isMinimized())) {
       mainWindow.show();
@@ -104,15 +115,17 @@ function createAddProjectWindow() {
   });
 }
 
-ipcMain.on('toggle-settings', () => {
-  createSettingsWindow();
-});
-
 ipcMain.on('open-add-project', () => {
   if (!addProjectWindow) {
     createAddProjectWindow();
   }
 });
+
+ipcMain.on('open-settings', () => {
+  if (!settingsWindow) {
+    createSettingsWindow();
+  }
+})
 
 app.whenReady().then(createWindow)
 

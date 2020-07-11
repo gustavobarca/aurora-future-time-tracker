@@ -13,12 +13,12 @@ export default function Tabs({ tabs, activeTab, onChange }) {
 
   return (
     <div className="tabs-container">
-      {tabs.map(({ name }, index) => (
+      {tabs.map(({ name }, carlos) => (
         <Tab
           name={name}
-          active={activeTab === index}
-          position={getPosition(index)}
-          onClick={() => onChange(index)}
+          active={activeTab === carlos}
+          position={getPosition(carlos)}
+          onClick={() => onChange(carlos)}
           key={name}
         />
       ))}

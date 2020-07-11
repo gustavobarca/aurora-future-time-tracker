@@ -12,7 +12,7 @@ export default function IconButton({icon, iconColor, iconSize, iconType, color, 
         setAnimating(false)
       }, 1000);     
     }
-
+    
     if (onClick) onClick()
   }
 
