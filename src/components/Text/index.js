@@ -14,7 +14,7 @@ export function Description({ style, children }) {
   return (
     <p style={{
       fontFamily: 'CircularStd-Book',
-      color: '#737579',
+      color: 'rgba(255, 255, 255, 0.5)',
       ...style,
     }}>{children}</p>
   )
