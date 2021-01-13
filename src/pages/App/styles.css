@@ -29,6 +29,14 @@
   src: url('../../assets/fonts/circular-std/CircularStd-Medium.ttf');
 }
 
+p {
+  font-family: "CircularStd-Book";
+}
+
+h2, h3 {
+  font-family: "CircularStd-Bold";
+}
+
 .content {
   height: 442px;
   width: 100%;

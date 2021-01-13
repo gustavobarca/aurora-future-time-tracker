@@ -9,14 +9,12 @@ import Dropdown from '../../components/Dropdown';
 import { getAllProjects } from '../../services/projects';
 import '../../styles/metrics.css';
 import './styles.css';
-import { useHistory } from 'react-router-dom';
 
 export default function AddProject() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [selectedProject, setSelectedProject] = useState(0);
-  const history = useHistory();
 
   async function getProjects() {
     try {
@@ -37,7 +35,7 @@ export default function AddProject() {
   }, [projects]) 
 
   function goNext() {
-    history.push(`/map-sections/${projects[selectedProject].gid}`)
+    
   }
 
   function handleOnChange(index) {
